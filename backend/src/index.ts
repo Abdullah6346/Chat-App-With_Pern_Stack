@@ -1,8 +1,9 @@
 import express from "express";
 import authroute from "./routes/auth.route";
 import messageroute from "./routes/message.route";
+import dotenv from "dotenv";
 const app = express();
-
+dotenv.config()
 const port = 3000;
 
 app.use("/api/auth", authroute);

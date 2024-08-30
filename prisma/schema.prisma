@@ -1,0 +1,49 @@
+//  pnpm prettier --write backend/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String         @id @default(cuid())
+  userName         String         @unique
+  fullName         String
+  password         String
+  gender           Gender
+  profilePic       String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  conversationsIds String[]
+  coversations     Conversation[]
+  message          Message[]
+}
+
+model Conversation {
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  participantsIds String[]
+  partcipants     User[]
+  messageIds      String[]
+  message         Message[]
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  conversationId String
+  coversations   Conversation @relation(fields: [conversationId], references: [id])
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id])
+  body           String
+}
+
+enum Gender {
+  male
+  female
+}
