@@ -1,4 +1,6 @@
 //  pnpm prettier --write backend/prisma/schema.prisma
+// pnpm prisma db push --schema=backend/prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
