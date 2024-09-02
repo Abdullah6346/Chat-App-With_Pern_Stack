@@ -82,3 +82,24 @@ export const getMessages = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error in getting messages' })
   }
 }
+export const getUsersForSidebar = async (req: Request, res: Response) => {
+  try {
+    const authUserId = req.user.id
+    const users = await prisma.user.findMany({
+      where: {
+        id: {
+          not: authUserId,
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        profilePic: true,
+      },
+    })
+    res.status(200).json(users)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error in getting users' })
+  }
+}
