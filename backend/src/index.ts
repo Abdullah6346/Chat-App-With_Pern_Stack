@@ -2,11 +2,13 @@ import express from 'express'
 import authroute from './routes/auth.route'
 import messageroute from './routes/message.route'
 import dotenv from 'dotenv'
+import cookie from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 const app = express()
 dotenv.config()
 const port = 3000
 app.use(express.json())
-
+app.use(cookieParser())
 app.use('/api/auth', authroute)
 app.use('/api/messages', messageroute)
 

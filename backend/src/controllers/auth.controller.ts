@@ -95,3 +95,28 @@ export const logout = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Error in Logging Out' })
   }
 }
+
+export const getMe = async (req: Request, res: Response) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    })
+
+    if (!user) {
+      return res.status(404).json({ error: 'User Not Found' })
+    }
+
+    res.status(200).json({
+      id: user.id,
+      fullName: user.fullName,
+      userName: user.userName,
+      gender: user.gender,
+      profilePic: user.profilePic,
+    })
+  } catch (error: any) {
+    console.log('Error in getMe Controller', error.message)
+    res.status(200).json({ error: 'Error in getting user' })
+  }
+}
