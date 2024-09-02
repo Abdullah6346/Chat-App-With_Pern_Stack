@@ -50,5 +50,40 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Error in Creating User' })
   }
 }
-export const login = async (req: Request, res: Response) => {}
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { userName, password } = req.body
+    const user = await prisma.user.findUnique({
+      where: {
+        userName,
+      },
+    })
+    if (!user) {
+      res.status(400).json({ error: 'Invalid Username' })
+    }
+
+    const isPasswordCorrect =
+      user && (await bycrptjs.compare(password, user.password))
+
+    if (!isPasswordCorrect) {
+      res.status(400).json({ error: 'Invalid Password' })
+    }
+
+    if (user && isPasswordCorrect) {
+      generateToken(user.id, res)
+      return res.status(200).json({
+        id: user.id,
+        fullName: user.fullName,
+        userName: user.userName,
+        gender: user.gender,
+        profilePic: user.profilePic,
+      })
+    } else {
+      res.status(400).json({ error: 'Invalid Username or Password' })
+    }
+  } catch (error: any) {
+    console.log('Error in Login Controller', error.message)
+    return res.status(500).json({ error: 'Error in Loging User' })
+  }
+}
 export const logout = async (req: Request, res: Response) => {}
