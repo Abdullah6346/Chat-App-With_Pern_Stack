@@ -21,33 +21,64 @@ export const sendMessage = async (req: Request, res: Response) => {
           },
         },
       })
+    }
 
-      const newMessage = await prisma.message.create({
-        data: {
-          senderId,
-          body: message,
-          conversationId: conversations.id,
+    const newMessage = await prisma.message.create({
+      data: {
+        senderId,
+        body: message,
+        conversationId: conversations.id,
+      },
+    })
+    if (newMessage) {
+      conversations = await prisma.conversation.update({
+        where: {
+          id: conversations.id,
         },
-      })
-      if (newMessage) {
-        conversations = await prisma.conversation.update({
-          where: {
-            id: conversations.id,
-          },
-          data: {
-            message: {
-              connect: {
-                id: newMessage.id,
-              },
+        data: {
+          message: {
+            connect: {
+              id: newMessage.id,
             },
           },
-        })
-      }
+        },
+      })
     }
     // Socket.io
-    res.status(201).json({ message: 'Message Sent Successfully' })
+    if (!newMessage) {
+      return res.status(200).json([])
+    }
+    res.status(200).json(newMessage)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Error in sending message' })
+  }
+}
+export const getMessages = async (req: Request, res: Response) => {
+  try {
+    const { id: userToChatId } = req.params
+    const senderId = req.user.id
+    const conversation = await prisma.conversation.findFirst({
+      where: {
+        participantsIds: {
+          hasEvery: [senderId, userToChatId],
+        },
+      },
+      include: {
+        message: {
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
+      },
+    })
+
+    if (!conversation) {
+      return res.status(200).json([])
+    }
+    res.status(200).json(conversation.message)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error in getting messages' })
   }
 }
