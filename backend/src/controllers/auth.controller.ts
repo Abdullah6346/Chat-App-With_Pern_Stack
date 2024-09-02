@@ -86,4 +86,12 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Error in Loging User' })
   }
 }
-export const logout = async (req: Request, res: Response) => {}
+export const logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie('jwt')
+    return res.status(200).json({ message: 'Logged Out Successfully' })
+  } catch (error: any) {
+    console.log('Error in Logout Controller', error.message)
+    return res.status(500).json({ error: 'Error in Logging Out' })
+  }
+}
