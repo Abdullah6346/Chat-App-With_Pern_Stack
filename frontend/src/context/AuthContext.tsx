@@ -25,6 +25,7 @@ const AuthContext = createContext<{
   setAuthUser: () => {},
   isLoading: true,
 })
+
 export const useAuthContext = () => {
   return useContext(AuthContext)
 }
