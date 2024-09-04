@@ -1,13 +1,22 @@
-import { DUMMY_MESSAGES } from "../../dummy_data/dummy";
-import Message from "./Message";
+import useGetMessages from '../../hooks/useGetMessages'
+import MessageSkeleton from '../skeletons/MessageSkeleton'
+import Message from './Message'
 
 const Messages = () => {
-	return (
-		<div className='px-4 flex-1 overflow-auto'>
-			{DUMMY_MESSAGES.map((message) => (
-				<Message key={message.id} message={message} />
-			))}
-		</div>
-	);
-};
-export default Messages;
+  const { loading, messages } = useGetMessages()
+  return (
+    <div className="px-4 flex-1 overflow-auto">
+      {loading && [...Array(3)].map((_, i) => <MessageSkeleton key={i} />)}
+      {!loading &&
+        messages.map((message) => (
+          <Message key={message.id} message={message} />
+        ))}
+      {!loading && messages.length === 0 && (
+        <p className="text-center text-white">
+          Send message to start conversation
+        </p>
+      )}
+    </div>
+  )
+}
+export default Messages

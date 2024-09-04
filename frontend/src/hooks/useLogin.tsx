@@ -18,7 +18,6 @@ const useLogin = () => {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       setAuthUser(data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.message)
     } finally {
