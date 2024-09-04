@@ -5,7 +5,6 @@ import Login from './pages/Login'
 import { useAuthContext } from './context/AuthContext'
 function App() {
   const { authUser, setAuthUser, isLoading } = useAuthContext()
-  console.log('authUser', authUser)
   if (isLoading) return null
   return (
     <main className="container-main p-4 h-screen flex items-center justify-center">
@@ -13,21 +12,15 @@ function App() {
         <Route
           path="/"
           element={authUser ? <Home /> : <Navigate to={'/login'} />}
-        >
-          {' '}
-        </Route>
+        ></Route>
         <Route
           path="/signup"
           element={!authUser ? <SignUp /> : <Navigate to={'/'} />}
-        >
-          {' '}
-        </Route>
+        ></Route>
         <Route
           path="/login"
           element={!authUser ? <Login /> : <Navigate to={'/'} />}
-        >
-          {' '}
-        </Route>
+        ></Route>
       </Routes>
     </main>
   )

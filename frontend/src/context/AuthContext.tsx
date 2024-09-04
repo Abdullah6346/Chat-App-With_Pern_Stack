@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   Dispatch,
   ReactNode,
@@ -8,7 +8,7 @@ import {
   useContext,
 } from 'react'
 
-type authUserType = {
+type AuthUserType = {
   id: string
   userName: string
   fullName: string
@@ -16,9 +16,10 @@ type authUserType = {
   email: string
   gender: string
 }
+
 const AuthContext = createContext<{
-  authUser: authUserType | null
-  setAuthUser: Dispatch<SetStateAction<authUserType | null>>
+  authUser: AuthUserType | null
+  setAuthUser: Dispatch<SetStateAction<AuthUserType | null>>
   isLoading: boolean
 }>({
   authUser: null,
@@ -31,26 +32,24 @@ export const useAuthContext = () => {
 }
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [authUser, setAuthUser] = useState<authUserType | null>(null)
+  const [authUser, setAuthUser] = useState<AuthUserType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const fetchAuthUser = async () => {
-      try {
-        const res = await fetch('/api/auth/me')
-        const data = await res.json()
-        if (!data.ok) {
-          throw new Error(data.error)
-        }
-        setAuthUser(data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setIsLoading(false)
-      }
+    const storedUser = localStorage.getItem('authUser')
+    if (storedUser) {
+      setAuthUser(JSON.parse(storedUser)) 
     }
-    fetchAuthUser()
+    setIsLoading(false)
   }, [])
+
+  useEffect(() => {
+    if (authUser) {
+      localStorage.setItem('authUser', JSON.stringify(authUser)) 
+    } else {
+      localStorage.removeItem('authUser') 
+    }
+  }, [authUser])
 
   return (
     <AuthContext.Provider value={{ authUser, isLoading, setAuthUser }}>
