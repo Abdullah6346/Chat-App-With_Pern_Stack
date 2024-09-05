@@ -1,4 +1,4 @@
-import React, {
+import  {
   createContext,
   Dispatch,
   ReactNode,
@@ -26,7 +26,7 @@ const AuthContext = createContext<{
   setAuthUser: () => {},
   isLoading: true,
 })
-
+//eslint-disable-next-line
 export const useAuthContext = () => {
   return useContext(AuthContext)
 }
