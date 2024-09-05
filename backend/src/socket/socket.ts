@@ -9,8 +9,8 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 })
-export const getRecieverSocket = (receiver: string) => {
-  return userSocketMap[receiver]
+export const getRecieverSocket = (receiverId: string) => {
+  return userSocketMap[receiverId]
 }
 const userSocketMap: { [key: string]: string } = {}
 
