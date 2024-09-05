@@ -4,7 +4,7 @@ import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import { useAuthContext } from './context/AuthContext'
 function App() {
-  const { authUser, setAuthUser, isLoading } = useAuthContext()
+  const { authUser, isLoading } = useAuthContext()
   if (isLoading) return null
   return (
     <main className="container-main p-4 h-screen flex items-center justify-center">
