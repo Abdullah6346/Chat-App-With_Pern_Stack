@@ -11,16 +11,14 @@ const port = process.env.PORT || 3000
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://chat-app-with-pern-stack-frontend.vercel.app', // Frontend domain
+  origin: 'https://chat-app-with-pern-stack-frontend.vercel.app', 
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'], // Include any necessary headers
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 }
 
-// Apply CORS middleware globally
 app.use(cors(corsOptions))
 
-// Body parser and cookie parser
 app.use(express.json())
 app.use(cookieParser())
 
