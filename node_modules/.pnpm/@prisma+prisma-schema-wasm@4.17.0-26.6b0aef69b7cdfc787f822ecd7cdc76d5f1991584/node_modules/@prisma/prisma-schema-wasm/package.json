@@ -1,0 +1,17 @@
+{
+  "name": "@prisma/prisma-schema-wasm",
+  "version": "4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584",
+  "description": "The WASM package for prisma-fmt",
+  "main": "src/prisma_schema_build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prisma/prisma-engines",
+    "directory": "prisma-schema-wasm"
+  },
+  "author": "Prisma",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/prisma/prisma-engines"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "prettier-plugin-prisma",
+  "version": "5.0.0",
+  "description": "Prettier plugin for Prisma files",
+  "keywords": [
+    "prettier-plugin",
+    "prisma"
+  ],
+  "repository": "git@github.com:umidbekk/prettier-plugin-prisma.git",
+  "license": "MIT",
+  "author": "Umidbek Karimov",
+  "main": "lib/plugin.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "checks": "npm run lint && npx tsc && npm test",
+    "lint": "prettier . --check",
+    "prepare": "husky install",
+    "release": "npx --yes np --test-script checks",
+    "tdd": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "@prisma/prisma-schema-wasm": "4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.3",
+    "@umidbekk/configs": "0.3.0",
+    "cross-env": "^7.0.3",
+    "husky": "8.0.3",
+    "jest": "29.6.1",
+    "lint-staged": "13.2.3",
+    "prettier": "3.0.0",
+    "prettier-plugin-packagejson": "2.4.5",
+    "typescript": "5.1.6",
+    "vscode-languageserver-protocol": "3.17.3"
+  },
+  "peerDependencies": {
+    "prettier": ">=2 || >=3"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=8"
+  },
+  "volta": {
+    "node": "14.21.3",
+    "npm": "8.19.4"
+  }
+}
