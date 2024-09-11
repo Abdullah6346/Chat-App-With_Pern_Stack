@@ -55,7 +55,7 @@ export const login = async (req: Request, res: Response) => {
     const { userName, password } = req.body
     const user = await prisma.user.findUnique({
       where: {
-        userName,
+        userName: userName,
       },
     })
     if (!user) {

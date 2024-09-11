@@ -1,7 +1,7 @@
 import express from 'express'
-import authroute from './routes/auth.route'
 import messageroute from './routes/message.route'
 import dotenv from 'dotenv'
+import authroute from './routes/auth.route'
 import cookieParser from 'cookie-parser'
 import { app, server } from './socket/socket'
 dotenv.config()
