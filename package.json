@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch backend/src --exec ts-node backend/src/index.ts",
+    "dev": "nodemon --watch backend/src --exec ts-node src/index.ts",
     "build": "tsc",
-    "postinstall": "prisma generate --schema=backend/prisma/schema.prisma",
+    "postinstall": "prisma generate /prisma/schema.prisma",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
