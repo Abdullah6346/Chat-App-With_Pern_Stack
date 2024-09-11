@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "https://chat-app-withpernstack-production.up.railway.app/",
-      },
+    //   "/api": {
+    //     target: "https://chat-app-withpernstack-production.up.railway.app/",
+    //   },
     },
   },
 });
