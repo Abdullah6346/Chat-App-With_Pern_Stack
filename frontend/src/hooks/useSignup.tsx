@@ -1,42 +1,45 @@
-import { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext'
-import toast from 'react-hot-toast'
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 type SignupInputs = {
-  fullName: string
-  userName: string
-  password: string
-  confirmPassword: string
-  gender: string
-}
+  fullName: string;
+  userName: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+};
 
 const useSignup = () => {
-  const [loading, setLoading] = useState(false)
-  const { setAuthUser } = useAuthContext()
+  const [loading, setLoading] = useState(false);
+  const { setAuthUser } = useAuthContext();
 
   const signup = async (inputs: SignupInputs) => {
     try {
-      setLoading(true)
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(inputs),
-      })
-      const data = await res.json()
+      setLoading(true);
+      const res = await fetch(
+        "https://chat-app-withpernstack-production.up.railway.app/api/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),
+        }
+      );
+      const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error)
-      setAuthUser(data)
+      if (!res.ok) throw new Error(data.error);
+      setAuthUser(data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error(error.message)
-      toast.error(error.message)
+      console.error(error.message);
+      toast.error(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  return { loading, signup }
-}
-export default useSignup
+  return { loading, signup };
+};
+export default useSignup;

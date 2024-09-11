@@ -10,15 +10,15 @@ const useSendMessage = () => {
     setLoading(true)
     try {
       const res = await fetch(
-        `/api/messages/send/${selectedConversation?.id}`,
+        `https://chat-app-withpernstack-production.up.railway.app/api/messages/send/${selectedConversation?.id}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ message }),
-        },
-      )
+        }
+      );
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       setMessages([...messages, data])
