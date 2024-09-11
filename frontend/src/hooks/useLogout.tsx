@@ -11,6 +11,7 @@ const useLogout = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/logout",
         {
           method: "POST",
+          credentials: "include",
         }
       );
       const data = await res.json();

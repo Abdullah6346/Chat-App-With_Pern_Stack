@@ -12,6 +12,7 @@ const useGetMessages = () => {
       try {
         const res = await fetch(
           `https://chat-app-withpernstack-production.up.railway.app/api/messages/${selectedConversation?.id}`
+
         );
         const data = await res.json();
         if (!res.ok) throw new Error(data.error);
