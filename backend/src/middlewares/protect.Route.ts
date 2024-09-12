@@ -58,3 +58,4 @@ const protectRoute = async (
 }
 
 export default protectRoute
+
