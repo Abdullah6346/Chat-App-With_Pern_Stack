@@ -9,7 +9,7 @@ const useLogin = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        "https://chat-app-withpernstack-production.up.railway.app/api/auth/login",
+        "/api/auth/login",
         {
           method: "POST",
           headers: {

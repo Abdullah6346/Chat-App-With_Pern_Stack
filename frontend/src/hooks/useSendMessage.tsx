@@ -13,7 +13,7 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://chat-app-withpernstack-production.up.railway.app/api/messages/send/${selectedConversation?.id}`,
+        `/api/messages/send/${selectedConversation?.id}`,
         {
           method: "POST",
           headers: {

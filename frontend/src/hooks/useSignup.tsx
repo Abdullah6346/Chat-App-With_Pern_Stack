@@ -18,7 +18,7 @@ const useSignup = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        "https://chat-app-withpernstack-production.up.railway.app/api/auth/signup",
+        "/api/auth/signup",
         {
           method: "POST",
           headers: {

@@ -14,7 +14,7 @@ const useGetMessages = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `https://chat-app-withpernstack-production.up.railway.app/api/messages/${selectedConversation?.id}`,
+          `/api/messages/${selectedConversation?.id}`,
           {
             method: "GET",
             headers: {
