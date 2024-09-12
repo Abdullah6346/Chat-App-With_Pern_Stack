@@ -1,38 +1,41 @@
-import { useState } from 'react'
-import useConversation from '../zustand/useConversation'
-import toast from 'react-hot-toast'
+import { useState } from "react";
+import useConversation from "../zustand/useConversation";
+import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useSendMessage = () => {
-  const [loading, setLoading] = useState(false)
-  const { messages, setMessages, selectedConversation } = useConversation()
+  const [loading, setLoading] = useState(false);
+  const { messages, setMessages, selectedConversation } = useConversation();
+  const { authToken } = useAuthContext();
+
   const sendMessage = async (message: string) => {
-    if (!selectedConversation) return
-    setLoading(true)
+    if (!selectedConversation) return;
+    setLoading(true);
     try {
       const res = await fetch(
         `https://chat-app-withpernstack-production.up.railway.app/api/messages/send/${selectedConversation?.id}`,
         {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({ message }),
         }
       );
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
-      setMessages([...messages, data])
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setMessages([...messages, data]);
     } catch (error: any) {
-      toast.error(error.message)
+      toast.error(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
   return {
     loading,
     sendMessage,
-  }
-}
+  };
+};
 
-export default useSendMessage
+export default useSendMessage;

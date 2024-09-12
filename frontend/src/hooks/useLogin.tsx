@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser,authToken } = useAuthContext();
   const login = async (userName: string, password: string) => {
     try {
       setLoading(true);
@@ -12,9 +12,9 @@ const useLogin = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/login",
         {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
 
           body: JSON.stringify({ userName, password }),

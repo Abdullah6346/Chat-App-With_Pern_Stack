@@ -3,7 +3,7 @@ import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser,authToken } = useAuthContext();
   const logout = async () => {
     try {
       setLoading(true);
@@ -11,7 +11,10 @@ const useLogout = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/logout",
         {
           method: "POST",
-          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
         }
       );
       const data = await res.json();

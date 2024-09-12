@@ -7,7 +7,7 @@ import {
   useEffect,
   useContext,
 } from "react";
-import React from "react";
+
 type AuthUserType = {
   id: string;
   userName: string;
@@ -17,28 +17,38 @@ type AuthUserType = {
   gender: string;
 };
 
+// Context type includes the token and setter
 const AuthContext = createContext<{
   authUser: AuthUserType | null;
   setAuthUser: Dispatch<SetStateAction<AuthUserType | null>>;
+  authToken: string | null;
+  setAuthToken: Dispatch<SetStateAction<string | null>>;
   isLoading: boolean;
 }>({
   authUser: null,
   setAuthUser: () => {},
+  authToken: null,
+  setAuthToken: () => {},
   isLoading: true,
 });
-//eslint-disable-next-line
-export const useAuthContext = () => {
-  return useContext(AuthContext);
-};
+
+// Hook to access the AuthContext
+export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>(null); // Manage JWT state
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
+    const storedToken = localStorage.getItem("authToken"); // Retrieve token
+
     if (storedUser) {
       setAuthUser(JSON.parse(storedUser));
+    }
+    if (storedToken) {
+      setAuthToken(storedToken); // Set the token in state
     }
     setIsLoading(false);
   }, []);
@@ -49,10 +59,18 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     } else {
       localStorage.removeItem("authUser");
     }
-  }, [authUser]);
+
+    if (authToken) {
+      localStorage.setItem("authToken", authToken); // Store token in localStorage
+    } else {
+      localStorage.removeItem("authToken");
+    }
+  }, [authUser, authToken]);
 
   return (
-    <AuthContext.Provider value={{ authUser, isLoading, setAuthUser }}>
+    <AuthContext.Provider
+      value={{ authUser, setAuthUser, authToken, setAuthToken, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

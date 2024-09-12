@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
 
   const [conversations, setConversations] = useState<ConversationType[]>([]);
+  const { authToken } = useAuthContext();
 
   useEffect(() => {
     const getConversations = async () => {
@@ -14,7 +16,10 @@ const useGetConversations = () => {
           "https://chat-app-withpernstack-production.up.railway.app/api/messages/conversations",
           {
             method: "GET",
-            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
           }
         );
         const data = await res.json();
@@ -31,7 +36,7 @@ const useGetConversations = () => {
     };
 
     getConversations();
-  }, []);
+  }, [authToken]);
 
   return { loading, conversations };
 };

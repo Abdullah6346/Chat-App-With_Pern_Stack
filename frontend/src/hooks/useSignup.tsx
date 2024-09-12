@@ -12,7 +12,7 @@ type SignupInputs = {
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser,authToken } = useAuthContext();
 
   const signup = async (inputs: SignupInputs) => {
     try {
@@ -21,9 +21,9 @@ const useSignup = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/signup",
         {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify(inputs),
         }

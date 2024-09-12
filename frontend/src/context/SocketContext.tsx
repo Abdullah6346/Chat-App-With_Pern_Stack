@@ -19,7 +19,7 @@ const SocketContext = createContext<ISocketContext | undefined>(undefined);
 const socketURL =
   import.meta.env.MODE == "development"
     ? "localhost:3001"
-    : "https://chat-app-withpernstack-production.up.railway.app/";
+    : "https://chat-app-withpernstack-production.up.railway.app";
 //eslint-disable-next-line
 export const useSocketContext = (): ISocketContext => {
   const context = useContext(SocketContext);
