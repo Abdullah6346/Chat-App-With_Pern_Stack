@@ -13,7 +13,7 @@ const useGetConversations = () => {
       try {
         setLoading(true);
         const res = await fetch(
-          "/api/messages/conversations",
+          "https://chat-app-withpernstack-production.up.railway.app/api/messages/conversations",
           {
             method: "GET",
             headers: {

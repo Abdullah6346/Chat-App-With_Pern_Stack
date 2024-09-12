@@ -14,14 +14,13 @@ const useGetMessages = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/messages/${selectedConversation?.id}`,
+          `https://chat-app-withpernstack-production.up.railway.app/api/messages/${selectedConversation?.id}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               authorization: `Bearer ${authToken}`,
             },
-
           }
         );
         const data = await res.json();
