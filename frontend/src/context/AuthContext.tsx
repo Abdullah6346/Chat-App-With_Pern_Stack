@@ -26,9 +26,9 @@ const AuthContext = createContext<{
   isLoading: boolean;
 }>({
   authUser: null,
-  setAuthUser: () => {},
+  setAuthUser: () => {}, // Ideally, this should be a no-op function
   authToken: null,
-  setAuthToken: () => {},
+  setAuthToken: () => {}, // Ideally, this should be a no-op function
   isLoading: true,
 });
 
@@ -37,18 +37,18 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
-  const [authToken, setAuthToken] = useState<string | null>(null); // Manage JWT state
+  const [authToken, setAuthToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
-    const storedToken = localStorage.getItem("authToken"); // Retrieve token
+    const storedToken = localStorage.getItem("jwt"); // Use 'jwt' as the key
 
     if (storedUser) {
       setAuthUser(JSON.parse(storedUser));
     }
     if (storedToken) {
-      setAuthToken(storedToken); // Set the token in state
+      setAuthToken(storedToken);
     }
     setIsLoading(false);
   }, []);
@@ -61,9 +61,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (authToken) {
-      localStorage.setItem("authToken", authToken); // Store token in localStorage
+      localStorage.setItem("jwt", authToken); // Store token with 'jwt' as the key
     } else {
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("jwt");
     }
   }, [authUser, authToken]);
 

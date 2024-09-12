@@ -19,7 +19,7 @@ const useGetMessages = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`,
+              authorization: `Bearer ${authToken}`,
             },
 
           }
@@ -34,7 +34,7 @@ const useGetMessages = () => {
       }
     };
     getMessages();
-  }, [selectedConversation, setMessages]);
+  }, [selectedConversation, setMessages,authToken]);
   return { loading, messages };
 };
 

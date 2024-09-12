@@ -13,7 +13,7 @@ const useLogout = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
+            authorization: `Bearer ${authToken}`,
           },
         }
       );

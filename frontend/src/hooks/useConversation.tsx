@@ -18,7 +18,7 @@ const useGetConversations = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              authorization: `Bearer ${authToken}`,
+              Authorization: `Bearer ${authToken}`,
             },
           }
         );

@@ -12,7 +12,7 @@ type SignupInputs = {
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser,authToken } = useAuthContext();
+  const { setAuthUser, authToken } = useAuthContext();
 
   const signup = async (inputs: SignupInputs) => {
     try {
@@ -23,7 +23,7 @@ const useSignup = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
+            authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify(inputs),
         }

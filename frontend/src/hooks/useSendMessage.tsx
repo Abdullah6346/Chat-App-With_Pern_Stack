@@ -18,7 +18,7 @@ const useSendMessage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
+            authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({ message }),
         }
