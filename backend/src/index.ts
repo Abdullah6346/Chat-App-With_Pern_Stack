@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000
 
 const corsOptions = {
   origin: [
-    'https://chat-app-with-pern-stack-frontend.vercel.app',
+    'https://chat-app-with-pern-stack.vercel.app',
     'http://localhost:5173',
   ],
   credentials: true,
