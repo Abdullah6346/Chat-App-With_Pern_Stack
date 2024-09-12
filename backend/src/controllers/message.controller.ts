@@ -5,7 +5,11 @@ export const sendMessage = async (req: Request, res: Response) => {
   try {
     const { message } = req.body
     const { id: receiverId } = req.params
-    const senderId = req.user.id
+
+    const senderId = req.user?.id
+    if (!senderId) {
+      return res.status(401).json({ error: 'User not authenticated' })
+    }
     let conversations = await prisma.conversation.findFirst({
       where: {
         participantsIds: {
@@ -62,7 +66,10 @@ export const sendMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   try {
     const { id: userToChatId } = req.params
-    const senderId = req.user.id
+    const senderId = req.user?.id
+    if (!senderId) {
+      return res.status(401).json({ error: 'User not authenticated' })
+    }
     const conversation = await prisma.conversation.findFirst({
       where: {
         participantsIds: {
@@ -89,7 +96,7 @@ export const getMessages = async (req: Request, res: Response) => {
 }
 export const getUsersForSidebar = async (req: Request, res: Response) => {
   try {
-    const authUserId = req.user.id
+    const authUserId = req.user?.id
     const users = await prisma.user.findMany({
       where: {
         id: {
