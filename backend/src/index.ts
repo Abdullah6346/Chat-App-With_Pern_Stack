@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import authroute from './routes/auth.route'
 import cookieParser from 'cookie-parser'
 import { app, server } from './socket/socket'
-// import cors from 'cors'
+import cors from 'cors'
 
 dotenv.config()
 const port = process.env.PORT || 3000
