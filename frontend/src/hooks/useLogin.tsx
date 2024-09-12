@@ -12,10 +12,11 @@ const useLogin = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/login",
         {
           method: "POST",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
-          
+
           body: JSON.stringify({ userName, password }),
           credentials: "include",
         }

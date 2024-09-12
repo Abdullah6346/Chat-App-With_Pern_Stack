@@ -14,7 +14,7 @@ const useGetConversations = () => {
           "https://chat-app-withpernstack-production.up.railway.app/api/messages/conversations",
           {
             method: "GET",
-            credentials: "include",
+            mode: "cors",
           }
         );
         const data = await res.json();

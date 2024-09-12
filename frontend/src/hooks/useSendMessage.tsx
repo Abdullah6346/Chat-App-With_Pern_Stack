@@ -13,11 +13,11 @@ const useSendMessage = () => {
         `https://chat-app-withpernstack-production.up.railway.app/api/messages/send/${selectedConversation?.id}`,
         {
           method: "POST",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ message }),
-          credentials: "include",
         }
       );
       const data = await res.json()

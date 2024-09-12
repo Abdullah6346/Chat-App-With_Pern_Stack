@@ -21,11 +21,11 @@ const useSignup = () => {
         "https://chat-app-withpernstack-production.up.railway.app/api/auth/signup",
         {
           method: "POST",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(inputs),
-          credentials: "include",
         }
       );
       const data = await res.json();
