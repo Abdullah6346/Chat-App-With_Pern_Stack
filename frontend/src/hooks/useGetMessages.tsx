@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
+import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 
-const useGetConversations = () => {
+const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
-  const [conversations, setConversations] = useState<ConversationType[]>([]);
+  const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
-    const getConversations = async () => {
+    const getMessages = async () => {
+      if (!selectedConversation) return;
+      setLoading(true);
+      setMessages([]);
       try {
-        setLoading(true);
         const res = await fetch(
-          "https://chat-app-withpernstack-production.up.railway.app/api/messages/conversations",
+          `https://chat-app-withpernstack-production.up.railway.app/api/messages/${selectedConversation.id}`,
           {
             method: "GET",
             headers: {
@@ -20,11 +23,8 @@ const useGetConversations = () => {
           }
         );
         const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error);
-        }
-        setConversations(data);
+        if (!res.ok) throw new Error(data.error || "An error occurred");
+        setMessages(data);
       } catch (error: any) {
         toast.error(error.message);
       } finally {
@@ -32,10 +32,9 @@ const useGetConversations = () => {
       }
     };
 
-    getConversations();
-  }, []); 
+    getMessages();
+  }, [selectedConversation, setMessages]);
 
-  return { loading, conversations };
+  return { messages, loading };
 };
-
-export default useGetConversations;
+export default useGetMessages;
