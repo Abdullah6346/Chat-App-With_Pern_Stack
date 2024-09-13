@@ -1,40 +1,38 @@
 import { useEffect, useState } from "react";
-import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
-const useGetMessages = () => {
+
+const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
-  const { messages, setMessages, selectedConversation } = useConversation();
-    const { authToken } = useAuthContext();
+  const [conversations, setConversations] = useState<ConversationType[]>([]);
 
   useEffect(() => {
-    const getMessages = async () => {
-      if (!selectedConversation) return;
-      setMessages([]);
-      setLoading(true);
+    const getConversations = async () => {
       try {
-        const res = await fetch(
-          `https://chat-app-withpernstack-production.up.railway.app/api/messages/${selectedConversation?.id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        setLoading(true);
+        const res = await fetch("/api/messages/conversations", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // This ensures cookies (JWT) are included in the request
+        });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
-        setMessages(data);
+
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+        setConversations(data);
       } catch (error: any) {
         toast.error(error.message);
       } finally {
         setLoading(false);
       }
     };
-    getMessages();
-  }, [selectedConversation, setMessages,authToken]);
-  return { loading, messages };
+
+    getConversations();
+  }, []); 
+
+  return { loading, conversations };
 };
 
-export default useGetMessages;
+export default useGetConversations;

@@ -25,16 +25,17 @@ const protectRoute = async (
   next: NextFunction,
 ) => {
   try {
-    const token = req.cookies.jwt || req.headers.authorization?.split(' ')[1]
+    const token = req.cookies.jwt
 
     if (!token) {
       return res
         .status(401)
         .json({ error: 'Unauthorized - Token Not Provided' })
     }
+    console.log('Token from frontend:', token)
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedToken
-
+    console.log('Decoded Token:', decoded)
     if (!decoded || !decoded.userId) {
       return res.status(401).json({ error: 'Unauthorized - Invalid Token' })
     }
@@ -43,6 +44,7 @@ const protectRoute = async (
       where: { id: decoded.userId },
       select: { id: true, fullName: true, profilePic: true, userName: true },
     })
+    console.log(process.env.JWT_SECRET)
 
     if (!user) {
       return res.status(401).json({ error: 'User Not Found' })

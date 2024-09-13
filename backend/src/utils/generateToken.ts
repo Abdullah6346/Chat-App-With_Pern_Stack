@@ -5,11 +5,12 @@ const generateToken = (userId: string, res: Response) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {
     expiresIn: '15d',
   })
+  console.log('Token being sent:', token)
   res.cookie('jwt', token, {
     maxAge: 60 * 60 * 24 * 15 * 1000, //in ms
     httpOnly: true,
-    sameSite: "none",
-    secure: false
+    sameSite: 'none',
+    secure: true,
   })
 }
 
