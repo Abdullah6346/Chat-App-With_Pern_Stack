@@ -9,14 +9,17 @@ const useLogin = () => {
   const login = async (userName: string, password: string) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userName, password }),
-        credentials: "include", // Ensures cookies are included with the request
-      });
+      const res = await fetch(
+        "https://chat-app-withpernstack-production.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName, password }),
+          credentials: "include", // Ensures cookies are included with the request
+        }
+      );
 
       const data = await res.json();
 

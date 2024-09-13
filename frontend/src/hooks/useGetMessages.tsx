@@ -9,13 +9,16 @@ const useGetConversations = () => {
     const getConversations = async () => {
       try {
         setLoading(true);
-        const res = await fetch("/api/messages/conversations", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // This ensures cookies (JWT) are included in the request
-        });
+        const res = await fetch(
+          "https://chat-app-withpernstack-production.up.railway.app/api/messages/conversations",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include", // This ensures cookies (JWT) are included in the request
+          }
+        );
         const data = await res.json();
 
         if (!res.ok) {

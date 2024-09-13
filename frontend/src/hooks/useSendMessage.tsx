@@ -11,7 +11,7 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/messages/send/${selectedConversation.id}`, // Simplified selectedConversation?.id to selectedConversation.id
+        `https://chat-app-withpernstack-production.up.railway.app/api/messages/send/${selectedConversation.id}`, // Simplified selectedConversation?.id to selectedConversation.id
         {
           method: "POST",
           headers: {
